@@ -1,0 +1,903 @@
+/* ============================================================
+   Jie Yee Lim — Personal Site
+   Top-nav layout · Georgia Tech navy (#003057) + gold (#b3a369)
+   ============================================================ */
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---------- Design tokens ---------- */
+:root {
+  /* Brand */
+  --navy: #003057;
+  --navy-deep: #001f3a;
+  --gold: #b3a369;
+  --gold-soft: #cdc199;
+
+  /* Text */
+  --ink: #1b1f24;
+  --ink-soft: #4b535c;
+  --ink-mute: #7b838c;
+
+  /* Surfaces */
+  --bg: #ffffff;
+  --bg-tint: #f6f7f9;
+  --line: #e5e8ec;
+
+  /* Layout */
+  --measure: 760px;
+  --topbar-h: 62px;
+
+  /* Type */
+  --serif: 'Source Serif 4', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- Base ---------- */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--navy);
+  text-decoration: none;
+  transition: color 0.18s var(--ease);
+}
+
+/* Body-copy links: gold underline that thickens on hover */
+.wrap p a,
+.wrap li a {
+  background-image: linear-gradient(var(--gold), var(--gold));
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 1px;
+  transition: background-size 0.22s var(--ease), color 0.18s var(--ease);
+}
+
+.wrap p a:hover,
+.wrap li a:hover {
+  color: var(--navy-deep);
+  background-size: 100% 2px;
+}
+
+::selection {
+  background: var(--gold-soft);
+  color: var(--navy-deep);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 300;
+  background: var(--navy);
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border-radius: 0 0 6px 0;
+  font-size: 0.9rem;
+}
+
+.skip-link:focus {
+  left: 0;
+  color: #fff;
+}
+
+/* ============================================================
+   Top bar
+   ============================================================ */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: var(--topbar-h);
+  padding: 0 2.5rem;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Thin navy→gold accent strip along the very top of the page */
+.topbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--navy) 0%, var(--navy) 45%, var(--gold) 100%);
+}
+
+/* --- Wordmark: sits at the top-left --- */
+.brand {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  color: var(--navy);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 0.2s var(--ease);
+}
+
+.brand:hover {
+  color: var(--gold);
+}
+
+/* --- Nav: sits at the top-right --- */
+.topnav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.topnav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  transition: color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+/* Gold underline that grows from the centre */
+.topnav a::after {
+  content: '';
+  position: absolute;
+  left: 0.85rem;
+  right: 0.85rem;
+  bottom: 0.15rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.24s var(--ease);
+}
+
+.topnav a:hover {
+  color: var(--navy);
+  background: var(--bg-tint);
+}
+
+.topnav a:hover::after {
+  transform: scaleX(1);
+}
+
+.topnav a.active {
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.topnav a.active::after {
+  transform: scaleX(1);
+}
+
+/* Outbound arrow on the CV link */
+.topnav a .ext {
+  font-size: 0.68rem;
+  opacity: 0.55;
+}
+
+/* --- Hamburger (narrow screens only) --- */
+.nav-toggle {
+  display: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--navy);
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+.nav-toggle:hover {
+  border-color: var(--gold);
+  background: var(--bg-tint);
+}
+
+.nav-toggle svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* ============================================================
+   Main content
+   ============================================================ */
+.main {
+  padding: 3.5rem 2.5rem 3rem;
+  min-height: calc(100vh - var(--topbar-h));
+}
+
+.wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+/* --- Intro / hero (About page) --- */
+.intro {
+  display: grid;
+  grid-template-columns: 172px 1fr;
+  gap: 2.4rem;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.intro-photo {
+  width: 172px;
+  height: 172px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--bg-tint);
+  outline: 1.5px solid var(--gold);
+  outline-offset: 7px;
+  box-shadow: 0 8px 28px rgba(0, 48, 87, 0.16);
+}
+
+.intro h1 {
+  padding-bottom: 0;
+  margin-bottom: 0.45rem;
+}
+
+/* The hero heading uses the photo as its anchor, not a rule */
+.intro h1::after {
+  content: none;
+}
+
+.intro-role {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ink-mute);
+  margin-bottom: 0.9rem;
+}
+
+.intro-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.2rem;
+  font-size: 0.88rem;
+}
+
+/* --- Headings --- */
+.main h1 {
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.018em;
+  color: var(--navy);
+  margin-bottom: 2.4rem;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.main h1::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 62px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+.main h2 {
+  font-family: var(--serif);
+  font-size: 1.42rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--navy);
+  margin-top: 3.2rem;
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Section headings that link out (e.g. an employer's site) keep the heading
+   colour rather than the default link colour, and shift to gold on hover. */
+.main h2 a {
+  color: inherit;
+}
+
+.main h2 a:hover {
+  color: var(--gold);
+}
+
+.main h2 .ext {
+  font-size: 0.68em;
+  color: var(--ink-mute);
+  vertical-align: 0.2em;
+}
+
+.main h3 {
+  font-family: var(--sans);
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.35rem;
+}
+
+.main p {
+  margin-bottom: 1.15rem;
+  color: var(--ink-soft);
+}
+
+.main p:last-child {
+  margin-bottom: 0;
+}
+
+/* Lead paragraph */
+.lead {
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+/* --- Research interest tags --- */
+.research-interests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.research-interests .tag {
+  background: var(--bg-tint);
+  border: 1px solid var(--line);
+  padding: 0.34rem 0.9rem;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease),
+    background 0.2s var(--ease);
+}
+
+.research-interests .tag:hover {
+  border-color: var(--gold);
+  background: #fff;
+  color: var(--navy);
+}
+
+/* --- Publications --- */
+.pub-list {
+  list-style: none;
+}
+
+.pub-list li {
+  position: relative;
+  padding: 1.1rem 0 1.1rem 1.3rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.94rem;
+  line-height: 1.68;
+  color: var(--ink-soft);
+}
+
+.pub-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.75rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.pub-list li:last-child {
+  border-bottom: none;
+}
+
+.pub-list strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.pub-list .pub-title {
+  font-style: italic;
+}
+
+.pub-list .pub-venue {
+  color: var(--ink-mute);
+}
+
+.pub-list a {
+  font-size: 0.82rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Entry cards — shared by the Research and Teaching pages
+   ============================================================ */
+.entry {
+  margin-bottom: 1rem;
+  padding: 1.2rem 1.5rem;
+  background: var(--bg-tint);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease),
+    background 0.2s var(--ease);
+}
+
+.entry:hover {
+  background: #fff;
+  transform: translateX(3px);
+  box-shadow: 0 3px 16px rgba(0, 48, 87, 0.08);
+}
+
+.entry h3 {
+  color: var(--navy);
+  margin-top: 0;
+}
+
+.entry .meta {
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0;
+}
+
+/* Programme an entry belongs to, when the course title alone is ambiguous.
+   Sentence case on purpose — uppercase wraps to three ugly lines on phones. */
+.entry .program {
+  margin-top: 0.3rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.entry p {
+  margin-top: 0.7rem;
+  margin-bottom: 0;
+  font-size: 0.92rem;
+}
+
+.entry ul {
+  margin-left: 1.1rem;
+  margin-top: 0.6rem;
+}
+
+.entry li {
+  margin-bottom: 0.3rem;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+/* ============================================================
+   Beyond Research / travel page
+   ============================================================ */
+.misc-section {
+  margin-bottom: 1rem;
+}
+
+.misc-section ul {
+  margin-left: 1.1rem;
+  color: var(--ink-soft);
+}
+
+.misc-section li {
+  margin-bottom: 0.45rem;
+  padding-left: 0.3rem;
+}
+
+.misc-section li::marker {
+  color: var(--gold);
+}
+
+/* --- Travel stat strip --- */
+.travel-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin: 1.8rem 0 2.6rem;
+}
+
+.travel-stats .stat {
+  flex: 1 1 150px;
+  padding: 1.15rem 1rem;
+  background: var(--bg-tint);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--gold);
+  border-radius: 0 0 10px 10px;
+  text-align: center;
+}
+
+.travel-stats .num {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.95rem;
+  font-weight: 600;
+  line-height: 1.05;
+  color: var(--navy);
+}
+
+.travel-stats .lbl {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.1rem;
+  margin-top: 1.2rem;
+  /* Cards size to their own photo instead of stretching to the tallest in the
+     row, so portrait shots stay portrait. Rows end up ragged; that is the
+     trade for not cropping. */
+  align-items: start;
+}
+
+.photo-card {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #fff;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.photo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0, 48, 87, 0.14);
+}
+
+/* Natural aspect ratio — no fixed height, no cropping. */
+.photo-card img {
+  width: 100%;
+  height: auto;
+}
+
+/* Caption: "City, Country" over the date. Stacked rather than side by side —
+   "Luxembourg City, Luxembourg" plus a date will not fit one 240px line. */
+.photo-card .caption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.7rem 0.9rem;
+  border-top: 1px solid var(--line);
+}
+
+.photo-card .place {
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.photo-card .date {
+  font-size: 0.73rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.photo-empty {
+  grid-column: 1 / -1;
+  padding: 2.6rem 1.5rem;
+  text-align: center;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  background: var(--bg-tint);
+  color: var(--ink-mute);
+  font-size: 0.92rem;
+}
+
+.photo-empty code {
+  font-size: 0.85em;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.1rem 0.4rem;
+}
+
+/* ============================================================
+   Contact
+   ============================================================ */
+.contact-list {
+  list-style: none;
+}
+
+.contact-list li {
+  display: flex;
+  gap: 0.7rem;
+  align-items: baseline;
+  padding: 0.4rem 0;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+.contact-list .label {
+  min-width: 84px;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   CV button
+   ============================================================ */
+.cv-button {
+  display: inline-block;
+  background: var(--navy);
+  color: #fff;
+  padding: 0.65rem 1.6rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.cv-button:hover {
+  background: var(--navy-deep);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.footer {
+  margin-top: 4.5rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.8rem;
+  color: var(--ink-mute);
+  text-align: center;
+}
+
+/* Social icons live here now that the top bar is nav-only */
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.1rem;
+}
+
+.footer-social a {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--ink-mute);
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease),
+    background 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.footer-social a:hover {
+  color: var(--navy-deep);
+  background: var(--gold);
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.footer-social svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 900px) {
+  .topbar {
+    padding: 0 1.5rem;
+  }
+
+  .main {
+    padding: 3rem 1.5rem 2.5rem;
+  }
+
+  /* Five nav items, two with long labels — tighten before they collide */
+  .brand {
+    font-size: 1rem;
+  }
+
+  .topnav {
+    gap: 0.1rem;
+  }
+
+  .topnav a {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+  }
+}
+
+/* Stack the hero before the text column gets squeezed */
+@media (max-width: 720px) {
+  .intro {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .intro-photo {
+    margin: 0 auto;
+    width: 148px;
+    height: 148px;
+  }
+
+  .intro-meta {
+    justify-content: center;
+  }
+}
+
+/* Below this width the six nav items cannot share a row with the wordmark,
+   so the nav collapses into a dropdown panel under the bar. Measured minimum for
+   the current labels is ~637px; 660 leaves a safety margin. Nav label length is
+   what drives this — re-measure after any rename.
+   Keep in sync with BREAKPOINT in js/main.js. */
+@media (max-width: 660px) {
+  .nav-toggle {
+    display: grid;
+  }
+
+  .topnav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.5rem 1.1rem 0.9rem;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 14px 28px rgba(0, 48, 87, 0.12);
+  }
+
+  .topnav.open {
+    display: flex;
+  }
+
+  .topnav a {
+    padding: 0.75rem 0.7rem;
+    font-size: 0.8rem;
+    border-radius: 6px;
+  }
+
+  /* The sliding underline doesn't read well on stacked links */
+  .topnav a::after {
+    content: none;
+  }
+
+  .topnav a.active {
+    background: var(--bg-tint);
+    border-left: 3px solid var(--gold);
+  }
+
+  .topnav a .ext {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .topbar {
+    padding: 0 1.1rem;
+    gap: 0.5rem;
+  }
+
+  .main {
+    padding: 2.5rem 1.2rem 2.5rem;
+  }
+
+  .main h1 {
+    font-size: 1.95rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .main h2 {
+    font-size: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .lead {
+    font-size: 1.02rem;
+  }
+
+  .contact-list li {
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.5rem 0;
+  }
+}
+
+/* Smallest phones still in use (iPhone SE, 320px) */
+@media (max-width: 360px) {
+  .topbar {
+    padding: 0 0.85rem;
+  }
+
+  .topnav {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+}
+
+/* ============================================================
+   Accessibility & print
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .topbar {
+    display: none !important;
+  }
+
+  .main {
+    padding: 0;
+  }
+
+  body {
+    color: #000;
+  }
+}

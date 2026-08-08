@@ -1,0 +1,35 @@
+# ---------------------------------------------------------------------------
+# Original camera files in assets/img/travel/
+#
+# The site only uses the converted, resized copies, which are named
+# country.jpg or country-city.jpg — lowercase, hyphens only, no spaces.
+# Every original has a space or an underscore in its filename
+# ("Spain_July 2022.jpg", "Monument Valley Arizona_Jan 2024.jpeg"),
+# so that is what we match on. Together they are ~72MB.
+#
+# NOTE: git on Windows sets core.ignorecase=true, so patterns are matched
+# case-insensitively. Do NOT add "*.JPG" or "[A-Z]*" here — they would also
+# match austria.jpg and friends and silently drop every photo from the site.
+# ---------------------------------------------------------------------------
+assets/img/travel/*[ _]*
+
+# Extensions the site never uses (safe: no .jpg collision under ignorecase)
+assets/img/travel/*.HEIC
+assets/img/travel/*.heic
+assets/img/travel/*.jpeg
+
+# Local tool settings, not part of the website
+.claude/settings.local.json
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
+# OS / editor cruft
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+*~
